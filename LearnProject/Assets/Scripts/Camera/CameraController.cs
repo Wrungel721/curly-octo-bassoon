@@ -23,11 +23,13 @@ namespace LearnProject.Camera
         
         protected void LateUpdate()
         {
-            Vector3 targetRotation = _rotationOffset - _followCamerOffset;
+            if (_player != null)
+            {
+                Vector3 targetRotation = _rotationOffset - _followCamerOffset;
 
-            transform.position = _player.transform.position + _followCamerOffset;
-            transform.rotation = Quaternion.LookRotation(targetRotation, Vector3.up);
-
+                transform.position = _player.transform.position + _followCamerOffset;
+                transform.rotation = Quaternion.LookRotation(targetRotation, Vector3.up);
+            }
 
         }
     }

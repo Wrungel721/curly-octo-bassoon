@@ -36,11 +36,7 @@ namespace LearnProject.Movement
         private void Translate() {
 
             var delta = MovementDirection * _speed * Time.deltaTime;
-
-            if (Input.GetKey(KeyCode.Space))
-                _characterController.Move(delta* _sprintMod);
-            else
-                _characterController.Move(delta);
+            _characterController.Move(delta);
         }
 
         private void Rotate()
