@@ -32,6 +32,8 @@ namespace LearnProject.Shooting
 
         public void SetWeapon( Weapon weaponPrefab, Transform hand)
         {
+            if (_weapon != null)
+                Destroy(_weapon.gameObject);
             _weapon = Instantiate(weaponPrefab, hand);
             _weapon.transform.localPosition = Vector3.zero;
             _weapon.transform.localRotation = Quaternion.identity;
@@ -49,7 +51,7 @@ namespace LearnProject.Shooting
             var mask = LayerUtils.EnemyMask;
 
             var size = Physics.OverlapSphereNonAlloc(position, radius, _colliders, mask);
-            if (size > 0)
+            if (size > 1)
             {
                 for (int  i = 0; i < size; i++)
                 {

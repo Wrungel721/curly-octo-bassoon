@@ -1,11 +1,13 @@
-using LearnProject.Movement;
+ using LearnProject.Movement;
+using LearnProject.PickUp;
 using LearnProject.Shooting;
 using UnityEngine;
 
 namespace LearnProject
 {
     [RequireComponent(typeof(CharacterMovementController), typeof(ShootingController))]
-    public class BaseCharacter : MonoBehaviour
+
+    public abstract class BaseCharacter : MonoBehaviour
     {
         [SerializeField]
         private Weapon _baseWeaponPrefab;
@@ -31,7 +33,7 @@ namespace LearnProject
 
         protected private void Start()
         {
-            _shootingController.SetWeapon(_baseWeaponPrefab, _hand);
+            SetWeapon(_baseWeaponPrefab);
         }
 
         void Update()
@@ -44,6 +46,7 @@ namespace LearnProject
 
             _characterMovementController.MovementDirection = direction;
             _characterMovementController.VisionDirection = visionDirection;
+
 
             if (_health<= 0f)
                 Destroy(gameObject);
@@ -59,6 +62,19 @@ namespace LearnProject
 
                 Destroy(other.gameObject);
             }
+            else if (LayerUtils.IsPickUp(other.gameObject))
+            {
+                var pickUp = other.gameObject.GetComponent<PickUpWeapon>();
+                pickUp.PickUp(this);    
+
+                Destroy(other.gameObject);
+            }
         }
+
+        public void SetWeapon(Weapon weapon)
+        {
+            _shootingController.SetWeapon(weapon, _hand);
+        }
+
     }
 }

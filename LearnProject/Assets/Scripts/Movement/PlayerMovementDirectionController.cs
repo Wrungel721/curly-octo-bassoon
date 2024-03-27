@@ -22,7 +22,6 @@ namespace LearnProject.Movement
             direction = _camera.transform.rotation * direction;
             direction.y = 0;
 
-
             MovementDirection = direction.normalized;
 
         }
